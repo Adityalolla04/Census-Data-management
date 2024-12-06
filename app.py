@@ -6,7 +6,6 @@ from sqlalchemy import text
 from census_income.database import SessionLocal
 from io import BytesIO
 import matplotlib.pyplot as plt
-import openpyxl
 
 # Set page configuration
 st.set_page_config(
@@ -80,14 +79,6 @@ def delete_data(endpoint):
             st.error(f"Failed to delete record: {response.text}")
     except Exception as e:
         st.error(f"Error deleting data: {e}")
-
-# Export Data to Excel
-def export_to_excel(df):
-    output = BytesIO()
-    with pd.ExcelWriter(output, engine="openpyxl") as writer:
-        df.to_excel(writer, index=False, sheet_name="CensusData")
-    output.seek(0)
-    return output
 
 # Sidebar Navigation
 menu = st.sidebar.radio("Navigation", ["Dashboard", "Manage Data", "Data Analysis"])
