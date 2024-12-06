@@ -110,13 +110,6 @@ if menu == "Dashboard":
         st.header(f"Filtered Data ({min_rows} - {max_rows} Rows)")
         st.dataframe(combined_data)
 
-        st.download_button(
-            label="Download Data as Excel",
-            data=export_to_excel(combined_data),
-            file_name="census_data.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        )
-
 # Manage Data Section
 elif menu == "Manage Data":
     st.title("Manage Census Data")
