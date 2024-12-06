@@ -1,6 +1,0 @@
-fastapi==0.100.0
-uvicorn[standard]==0.23.1
-psycopg2-binary==2.9.7
-sqlalchemy==2.0.21
-pandas==2.1.1
-matplotlib==3.8.2
