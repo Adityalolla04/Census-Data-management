@@ -27,19 +27,24 @@ def get_db():
 def fetch_combined_data(min_rows, max_rows):
     query = text("""
         SELECT 
-            i.individual_id, i.age, i.sex, i.fnlwgt, i.hours_per_week, i.native_country, 
-            jd.workclass, jd.occupation, 
-            ed.education_level, ed.education_num,
-            inc.income_class, 
-            rel.relationship_status, rel.marital_status
-        FROM individuals i
-        LEFT JOIN jobdetails jd ON i.individual_id = jd.individual_id
-        LEFT JOIN educationdetails ed ON i.individual_id = ed.individual_id
-        LEFT JOIN incomedetails inc ON i.individual_id = inc.individual_id
-        LEFT JOIN relationshipdetails rel ON i.individual_id = rel.individual_id
-        WHERE inc.income_class = '>50K'
-        ORDER BY individual_id
-        LIMIT :max_rows OFFSET :min_rows
+    i.individual_id, i.age, i.sex, i.fnlwgt, i.hours_per_week, i.native_country,
+    jd.workclass, jd.occupation, ed.education_level, ed.education_num, 
+    inc.income_class, rel.marital_status
+    FROM 
+        individuals i
+    LEFT JOIN 
+        jobdetails jd ON i.individual_id = jd.individual_id
+    LEFT JOIN 
+        educationdetails ed ON i.individual_id = ed.individual_id
+    LEFT JOIN 
+        incomedetails inc ON i.individual_id = inc.individual_id
+    LEFT JOIN 
+        relationshipdetails rel ON i.individual_id = rel.individual_id
+    WHERE 
+        inc.income_class = '>50K'
+    ORDER BY 
+        individual_id
+    LIMIT :max_rows OFFSET :min_rows
     """)
     try:
         with SessionLocal() as db:
@@ -103,14 +108,12 @@ if menu == "Dashboard":
     combined_data = fetch_combined_data(min_rows, max_rows)
     if not combined_data.empty:
         st.header("Overview Metrics")
-        total_individuals = len(combined_data)
         avg_age = combined_data['age'].mean()
         income_greater_50k = len(combined_data[combined_data["income_class"] == ">50K"])
 
-        col1, col2, col3 = st.columns(3)
-        col1.metric("Total Individuals", total_individuals)
-        col2.metric("Average Age", round(avg_age, 2))
-        col3.metric("Income >50K", income_greater_50k)
+        col1, col2 = st.columns(2)
+        col1.metric("Average Age", round(avg_age, 2))
+        col2.metric("Income >50K", income_greater_50k)
 
         st.header(f"Filtered Data ({min_rows} - {max_rows} Rows)")
         st.dataframe(combined_data)
