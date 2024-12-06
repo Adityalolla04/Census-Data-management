@@ -8,7 +8,6 @@ from io import BytesIO
 import matplotlib.pyplot as plt
 import openpyxl
 
-
 # Set page configuration
 st.set_page_config(
     page_title="Census Income Management System",
