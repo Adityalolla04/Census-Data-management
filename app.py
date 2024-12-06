@@ -6,7 +6,7 @@ from sqlalchemy import text
 from census_income.database import SessionLocal
 from io import BytesIO
 import matplotlib.pyplot as plt
-openpyxl
+import openpyxl
 
 
 # Set page configuration
