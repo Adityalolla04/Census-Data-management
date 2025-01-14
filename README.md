@@ -1,4 +1,4 @@
-# End to End Census Data Management with Heroku
+# End to End Project on Census Data Management with Heroku
 
 ## Project Overview
 
